@@ -29,6 +29,7 @@ install_mint() {
   (
     echo "∗ Downloading and installing mint..."
     curl --silent --fail --location --create-dirs --output "$install_path/bin/mint" "$download_url" || fail "Could not download mint $version"
+    chmod +x "$install_path/bin/mint"
     echo "The installation was successful!"
   ) || (
     rm -rf "$install_path"
