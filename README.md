@@ -4,14 +4,14 @@
 </div>
 <hr />
 
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/asdf-community/asdf-mint/Main%20workflow?style=flat-square)](https://github.com/asdf-community/asdf-mint/actions)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mint-lang/asdf-mint/Main%20workflow?style=flat-square)](https://github.com/mint-lang/asdf-mint/actions)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
-[![License](https://img.shields.io/github/license/asdf-community/asdf-mint?style=flat-square&color=brightgreen)](https://github.com/asdf-community/asdf-mint/blob/master/LICENSE)
+[![License](https://img.shields.io/github/license/mint-lang/asdf-mint?style=flat-square&color=brightgreen)](https://github.com/mint-lang/asdf-mint/blob/master/LICENSE)
 
 ## Installation
 
 ```
-asdf plugin-add mint https://github.com/asdf-community/asdf-mint.git
+asdf plugin-add mint https://github.com/mint-lang/asdf-mint.git
 ```
 
 ## Usage
