@@ -2,18 +2,19 @@
 
 set -eo pipefail
 
-fail() {
-  echo -e "\e[31mFail:\e[m $*"
+err() {
+  echo >&2 -e "\e[31mE:\e[m $*"
   exit 1
 }
 
 install_mint() {
   local install_type=$1
-  local version=$2
+  local install_version=$2
   local install_path=$3
+  local download_path=$4
 
   if [ "$install_type" != "version" ]; then
-    fail "asdf-mint supports release installs only"
+    err "asdf-mint supports release installs only"
   fi
 
   local platform
@@ -21,20 +22,33 @@ install_mint() {
   case "$OSTYPE" in
     darwin*) platform="osx" ;;
     linux*) platform="linux" ;;
-    *) fail "Unsupported platform" ;;
+    *) err "unsupported platform" ;;
   esac
 
-  local download_url="https://github.com/mint-lang/mint/releases/download/${version}/mint-${version}-${platform}"
+  if [ -z "$download_path" ]; then
+    local download_url="https://github.com/mint-lang/mint/releases/download/$install_version}/mint-$install_version-$platform"
 
-  (
-    echo "∗ Downloading and installing mint..."
-    curl --silent --fail --location --create-dirs --output "$install_path/bin/mint" "$download_url" || fail "Could not download mint $version"
-    chmod +x "$install_path/bin/mint"
-    echo "The installation was successful!"
-  ) || (
-    rm -rf "$install_path"
-    fail "An error occurred"
-  )
+    (
+      echo "∗ Downloading and installing mint..."
+      curl --silent --fail --location --create-dirs --output "$install_path/bin/mint" "$download_url" || err "Could not download mint $install_version"
+      chmod +x "$install_path/bin/mint"
+      echo "The installation was successful!"
+    ) || (
+      rm -rf "$install_path"
+      err "an error occurred downloading and installing mint"
+    )
+  else
+    (
+      echo "* Installing mint..."
+      mkdir -p "$install_path/bin"
+      cp "$download_path/mint-$install_version-$platform" "$install_path/bin/mint"
+      chmod +x "$install_path/bin/mint"
+      echo "The installation was successful!"
+    ) || (
+      rm -rf "$install_path"
+      err "an error occurred installing mint"
+    )
+  fi
 }
 
-install_mint "$ASDF_INSTALL_TYPE" "$ASDF_INSTALL_VERSION" "$ASDF_INSTALL_PATH"
+install_mint "$ASDF_INSTALL_TYPE" "$ASDF_INSTALL_VERSION" "$ASDF_INSTALL_PATH" "$ASDF_DOWNLOAD_PATH"
