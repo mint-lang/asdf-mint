@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+err() {
+  echo >&2 -e "\e[31mE:\e[m $*"
+  exit 1
+}
+
+download_mint() {
+  local install_type=$1
+  local install_version=$2
+  local download_path=$3
+
+  if [ "$install_type" != "version" ]; then
+    err "asdf-mint supports release installs only"
+  fi
+
+  local platform
+  case "$OSTYPE" in
+    darwin*) platform="osx" ;;
+    linux*) platform="linux" ;;
+    *) err "unsupported platform" ;;
+  esac
+
+  local download_url="https://github.com/mint-lang/mint/releases/download/$install_version/mint-$install_version-$platform"
+
+  (
+    echo "∗ Downloading mint..."
+    cd "$download_path"
+    curl --silent --fail --location --remote-name "$download_url" || err "could not download mint $install_version"
+  ) || (
+    err "an error occurred downloading mint"
+  )
+}
+
+download_mint "$ASDF_INSTALL_TYPE" "$ASDF_INSTALL_VERSION" "$ASDF_DOWNLOAD_PATH"
