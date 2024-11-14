@@ -25,8 +25,16 @@ install_mint() {
     *) err "unsupported platform" ;;
   esac
 
+  local architecture
+  
+  case "$(uname -m)" in
+    x86_64) architecture="x86_64" ;;
+    arm64) architecture="arm64" ;;
+    *) fail "Unsupported architecture" ;;
+  esac
+
   if [ -z "$download_path" ]; then
-    local download_url="https://github.com/mint-lang/mint/releases/download/$install_version}/mint-$install_version-$platform"
+    local download_url="https://github.com/mint-lang/mint/releases/download/$install_version}/mint-$install_version-$platform-$architecture"
 
     (
       echo "∗ Downloading and installing mint..."
@@ -41,7 +49,7 @@ install_mint() {
     (
       echo "* Installing mint..."
       mkdir -p "$install_path/bin"
-      cp "$download_path/mint-$install_version-$platform" "$install_path/bin/mint"
+      cp "$download_path/mint-$install_version-$platform-$platform-$architecture" "$install_path/bin/mint"
       chmod +x "$install_path/bin/mint"
       echo "The installation was successful!"
     ) || (
