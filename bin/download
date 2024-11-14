@@ -34,7 +34,7 @@ download_mint() {
   local download_url="https://github.com/mint-lang/mint/releases/download/$install_version/mint-$install_version-$platform-$architecture"
 
   (
-    echo "∗ Downloading and installing mint ($download_url -> $install_path/bin/mint)"
+    echo "∗ Downloading and installing mint ($download_url)"
     cd "$download_path"
     curl --silent --fail --location --remote-name "$download_url" || err "could not download mint $install_version"
   ) || (
