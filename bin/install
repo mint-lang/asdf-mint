@@ -26,7 +26,7 @@ install_mint() {
   esac
 
   local architecture
-  
+
   case "$(uname -m)" in
     x86_64) architecture="x86_64" ;;
     arm64) architecture="arm64" ;;
@@ -49,7 +49,7 @@ install_mint() {
     (
       echo "* Installing mint..."
       mkdir -p "$install_path/bin"
-      cp "$download_path/mint-$install_version-$platform-$platform-$architecture" "$install_path/bin/mint"
+      cp "$download_path/mint-$install_version-$platform-$architecture" "$install_path/bin/mint"
       chmod +x "$install_path/bin/mint"
       echo "The installation was successful!"
     ) || (
