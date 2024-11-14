@@ -37,7 +37,7 @@ install_mint() {
     local download_url="https://github.com/mint-lang/mint/releases/download/$install_version}/mint-$install_version-$platform-$architecture"
 
     (
-      echo "∗ Downloading and installing mint..."
+      echo "∗ Downloading and installing mint ($download_url -> $install_path/bin/mint)"
       curl --silent --fail --location --create-dirs --output "$install_path/bin/mint" "$download_url" || err "Could not download mint $install_version"
       chmod +x "$install_path/bin/mint"
       echo "The installation was successful!"
