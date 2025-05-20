@@ -29,6 +29,7 @@ jobs:
         uses: asdf-vm/actions/plugin-test@v4.0.0
         with:
           command: mint version
+          version: 0.24.1
         env:
           GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
